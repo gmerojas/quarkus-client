@@ -39,6 +39,6 @@ public class HandlerResponse {
     @NoArgsConstructor
     @RegisterForReflection
     public static class DataResponse{
-        List data;
+        Object data;
     }
 }
