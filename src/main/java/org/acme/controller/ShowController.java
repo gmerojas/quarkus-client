@@ -24,4 +24,11 @@ public class ShowController {
         return Response.status(handlerResponse.getMetadata().getHttpCode()).entity(handlerResponse).build();
     }
 
+    @GET
+    @Path("shows")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getShowAll(){
+        HandlerResponse handlerResponse = service.getShows();
+        return Response.status(handlerResponse.getMetadata().getHttpCode()).entity(handlerResponse).build();
+    }
 }

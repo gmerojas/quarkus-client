@@ -16,6 +16,8 @@ import org.acme.dto.Show;
 import org.acme.response.HandlerResponse;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -97,6 +99,36 @@ public class ShowService implements IShowService {
         metadataResponse.setMessage(message);
         metadataResponse.setHttpCode(httpCode);
         dataResponse.setData(show);
+
+        HandlerResponse handlerResponse = new HandlerResponse(metadataResponse, dataResponse);
+
+        return handlerResponse;
+    }
+
+    @Override
+    public HandlerResponse getShows() {
+
+        String message = "Success";
+        Integer httpCode = Response.Status.OK.getStatusCode();
+
+        HandlerResponse.MetadataResponse metadataResponse = new HandlerResponse.MetadataResponse();
+        HandlerResponse.DataResponse dataResponse = new HandlerResponse.DataResponse();
+
+        List<Show> showList = new ArrayList<>();
+
+        try{
+
+            showList = showRestClient.getShows();
+
+        }catch (Exception ex){
+            System.out.println("Error al obtener listado de shows por ID. Message: " + ex.getMessage());
+            message = "Fail";
+            httpCode = Response.Status.BAD_REQUEST.getStatusCode();
+        }
+
+        metadataResponse.setMessage(message);
+        metadataResponse.setHttpCode(httpCode);
+        dataResponse.setData(showList);
 
         HandlerResponse handlerResponse = new HandlerResponse(metadataResponse, dataResponse);
 
